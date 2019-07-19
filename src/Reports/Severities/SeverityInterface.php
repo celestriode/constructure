@@ -1,5 +1,8 @@
 <?php namespace Celestriode\Constructure\Reports\Severities;
 
+/**
+ * Describes a type of severity.
+ */
 interface SeverityInterface
 {
     /**

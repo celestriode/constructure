@@ -7,6 +7,12 @@ use Celestriode\Constructure\Reports\Severities\Fatal;
 use Celestriode\Constructure\Reports\Severities\Error;
 use Celestriode\Constructure\Reports\Severities\Warn;
 
+/**
+ * A standard report message optionally available for all structure validators to use.
+ * 
+ * Primarily implements simple methods, but comes with some helper methods to more easily
+ * create messages based on standard severities packaged with this library.
+ */
 class Message implements MessageInterface
 {
     /** @var string $format The format using sprintf. */
@@ -158,7 +164,7 @@ class Message implements MessageInterface
      */
     public static function debug(ContextInterface $context, string $format, string ...$args): self
     {
-        return static::createReport($context, new Debug(), $format, ...$args);
+        return static::createReport($context, Debug::instance(), $format, ...$args);
     }
 
     /**
@@ -173,7 +179,7 @@ class Message implements MessageInterface
      */
     public static function info(ContextInterface $context, string $format, string ...$args): self
     {
-        return static::createReport($context, new Info(), $format, ...$args);
+        return static::createReport($context, Info::instance(), $format, ...$args);
     }
 
     /**
@@ -188,7 +194,7 @@ class Message implements MessageInterface
      */
     public static function warn(ContextInterface $context, string $format, string ...$args): self
     {
-        return static::createReport($context, new Warn(), $format, ...$args);
+        return static::createReport($context, Warn::instance(), $format, ...$args);
     }
 
     /**
@@ -203,7 +209,7 @@ class Message implements MessageInterface
      */
     public static function error(ContextInterface $context, string $format, string ...$args): self
     {
-        return static::createReport($context, new Error(), $format, ...$args);
+        return static::createReport($context, Error::instance(), $format, ...$args);
     }
 
     /**
@@ -218,6 +224,6 @@ class Message implements MessageInterface
      */
     public static function fatal(ContextInterface $context, string $format, string ...$args): self
     {
-        return static::createReport($context, new Fatal(), $format, ...$args);
+        return static::createReport($context, Fatal::instance(), $format, ...$args);
     }
 }

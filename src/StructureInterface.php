@@ -5,8 +5,6 @@ use Celestriode\Constructure\Statistics\Statistics;
 
 /**
  * Describes the expected structure that an input should be compared to.
- *
- * Essentially just handles the comparing function.
  */
 interface StructureInterface
 {
@@ -19,4 +17,14 @@ interface StructureInterface
      * @return boolean
      */
     public function compareStructure(InputInterface $input, ReportsInterface $reports, Statistics $statistics): bool;
+
+    /**
+     * Runs extra audits against the incoming input if desired.
+     *
+     * @param InputInterface $input The input to audit.
+     * @param ReportsInterface $reports Reports to add to.
+     * @param Statistics $statistics Statistics to manipulate.
+     * @return void
+     */
+    public function performAudits(InputInterface $input, ReportsInterface $reports, Statistics $statistics): void;
 }

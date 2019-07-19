@@ -2,6 +2,9 @@
 
 use Celestriode\Constructure\Reports\Severities\SeverityInterface;
 
+/**
+ * Describes a single report. This includes the message, context, and optional severity of the report.
+ */
 interface MessageInterface
 {
     /**

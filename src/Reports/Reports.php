@@ -1,11 +1,15 @@
 <?php namespace Celestriode\Constructure\Reports;
 
-use Celestriode\Constructure\Reports\Severities\SeverityInterface;
-
+/**
+ * A standard report container optionally available for all structure validators to use.
+ * 
+ * This class is used if no reports container is supplied to Celestriode\Constructure::validate().
+ */
 class Reports implements ReportsInterface
 {
     /** @var array $reports Array of MessageInterface: reports with a severity. */
     private $reports = [];
+
     /** @var array $reports Array of MessageInterface: reports without a severity. */
     private $noSeverityReports = [];
 

@@ -1,5 +1,8 @@
 <?php namespace Celestriode\Constructure\Reports;
 
+/**
+ * An optional class to provide to ContextInterface::contextToString() that will handle prettifying the context.
+ */
 interface PrettifySupplier
 {
     /**
