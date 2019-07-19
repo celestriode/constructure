@@ -28,9 +28,11 @@ abstract class AbstractExpectedStructure implements StructureInterface
      * @param PredicateInterface $predicate The optional test that must succeed before performing the audit.
      * @return void
      */
-    final public function addAudit(AuditInterface $audit, PredicateInterface $predicate = null): void
+    final public function addAudit(AuditInterface $audit, PredicateInterface $predicate = null): self
     {
         $this->audits->attach($audit, $predicate);
+
+        return $this;
     }
 
     /**
@@ -49,11 +51,13 @@ abstract class AbstractExpectedStructure implements StructureInterface
      * @param InputInterface $input The input to audit.
      * @param ReportsInterface $reports Reports to add to.
      * @param Statistics $statistics Statistics to manipulate.
-     * @return void
+     * @return bool
      */
-    public function performAudits(InputInterface $input, ReportsInterface $reports, Statistics $statistics): void
+    public function performAudits(InputInterface $input, ReportsInterface $reports, Statistics $statistics): bool
     {
         // Cycle through each audit.
+
+        $successful = true;
 
         /** @var AuditInterface $audit */
         foreach ($this->audits as $audit) {
@@ -77,13 +81,21 @@ abstract class AbstractExpectedStructure implements StructureInterface
             // Otherwise perform the audit.
 
             try {
-                $audit->audit($input, $this, $reports, $statistics);
+                if (!$audit->audit($input, $this, $reports, $statistics)) {
+
+                    $successful = false;
+                }
             } catch (AuditFailed $exc) {
 
                 // If the audit failed in some way, store the message.
 
                 $reports->addReport($exc->getReportMessage());
+                $successful = false;
             }
         }
+		
+		// Return whether or not all audits were successful.
+
+        return $successful;
     }
 }

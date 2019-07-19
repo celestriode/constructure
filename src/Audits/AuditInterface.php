@@ -23,7 +23,7 @@ interface AuditInterface
      * @param StructureInterface $expected The expected structure if needed.
      * @param ReportsInterface $reports Reports to add to.
      * @param Statistics $statistics Statistics to manipulate.
-     * @return void
+     * @return bool
      */
-    public function audit(InputInterface $input, StructureInterface $expected, ReportsInterface $reports, Statistics $statistics): void;
+    public function audit(InputInterface $input, StructureInterface $expected, ReportsInterface $reports, Statistics $statistics): bool;
 }
