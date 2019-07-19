@@ -23,16 +23,15 @@ class Reports implements ReportsInterface
     public function addReports(MessageInterface ...$reports): void
     {
         for ($i = 0, $j = count($reports); $i < $j; $i++) {
-
             $this->addReport($reports[$i], $reports[$i]->getSeverity());
         }
     }
 
     /**
      * Adds a single report to the list of reports.
-     * 
+     *
      * Reports are separated by severity.
-     * 
+     *
      * If no severity is specified, the reports are held in and accessed from a separate list.
      *
      * @param MessageInterface $report The report to add.
@@ -55,7 +54,7 @@ class Reports implements ReportsInterface
 
     /**
      * Returns all reports (including those without severity), or only reports of the specified severity class name.
-     * 
+     *
      * Specify a severity as NULL in order to include reports without a severity.
      *
      * @param string|null ...$severities The class names of the severities to grab reports of.
@@ -66,13 +65,10 @@ class Reports implements ReportsInterface
         // Return all reports.
 
         if (empty($severities)) {
-
             $buffer = [];
 
             foreach ($this->reports as $reports) {
-
                 foreach ($reports as $report) {
-
                     $buffer[] = $report;
                 }
             }
@@ -91,13 +87,12 @@ class Reports implements ReportsInterface
         // Cycle through each severity.
 
         for ($i = 0, $j = count($severities); $i < $j; $i++) {
-
             if ($severities[$i] === null) {
 
                 // If null, add reports without severity.
 
                 $buffer = array_merge($buffer, $this->noSeverityReports);
-            } else if (isset($this->reports[$severities[$i]])) {
+            } elseif (isset($this->reports[$severities[$i]])) {
 
                 // Add reports of the specified severity.
 

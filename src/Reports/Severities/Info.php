@@ -2,5 +2,4 @@
 
 class Info extends AbstractSeverity
 {
-    
 }

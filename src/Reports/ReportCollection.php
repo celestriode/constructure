@@ -24,7 +24,6 @@ final class ReportCollection implements \Countable
     public function addReports(MessageInterface ...$reports): void
     {
         for ($i = 0, $j = count($reports); $i < $j; $i++) {
-
             $this->reports[] = $reports[$i];
         }
     }

@@ -5,7 +5,7 @@ use Celestriode\Constructure\Statistics\Statistics;
 
 /**
  * Describes the expected structure that an input should be compared to.
- * 
+ *
  * Essentially just handles the comparing function.
  */
 interface StructureInterface

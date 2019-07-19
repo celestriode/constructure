@@ -2,5 +2,4 @@
 
 class Warn extends AbstractSeverity
 {
-    
 }

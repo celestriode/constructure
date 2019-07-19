@@ -10,7 +10,7 @@ interface InputInterface
 {
     /**
      * Returns the input as context.
-     * 
+     *
      * Basically just do "return $this;" if the input is also the context, unless you have more complex things to do.
      *
      * @return ContextInterface

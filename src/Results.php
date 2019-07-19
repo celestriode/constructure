@@ -5,10 +5,10 @@ use Celestriode\Constructure\Statistics\Statistics;
 
 /**
  * Stores information about the result of validating a structure.
- * 
+ *
  * This can include numerous things, such as a simple bool, the generated reports,
  * and statistics.
- * 
+ *
  * This is provided by Celestriode\Constructure\Constructure::validate().
  */
 class Results
@@ -31,7 +31,7 @@ class Results
 
     /**
      * Sets whether or not the structure succeeded.
-     * 
+     *
      * Success is determined by the implemented structural validation via StructureInterface. Return true and false wisely.
      *
      * @param boolean $succeeds True if succeeeded.

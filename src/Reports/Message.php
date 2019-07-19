@@ -30,7 +30,7 @@ class Message implements MessageInterface
 
     /**
      * Sets the format to be filled in with args.
-     * 
+     *
      * See sprintf() for formatting details.
      *
      * @param string $format The format to use.
@@ -54,7 +54,7 @@ class Message implements MessageInterface
 
     /**
      * Sets the context relevant to this report.
-     * 
+     *
      * Context is used in order to provide a stringified
      * version of the problematic structure.
      *
@@ -119,7 +119,7 @@ class Message implements MessageInterface
 
     /**
      * Returns the severity of the message.
-     * 
+     *
      * Null if no severity whatsoever (just a simple message).
      *
      * @return SeverityInterface|null
@@ -148,7 +148,7 @@ class Message implements MessageInterface
 
     /**
      * Creates a report message with the "debug" severity.
-     * 
+     *
      * Summary usage: non-issues that the developer should be made aware of. For example, when successfully performing an operation based on a field's value.
      *
      * @param ContextInterface $context Context for the message.
@@ -163,7 +163,7 @@ class Message implements MessageInterface
 
     /**
      * Creates a report message with the "info" severity.
-     * 
+     *
      * Summary usage: non-issues that the user should be made aware of. For example, use of an accepted custom value outside a list of expected values.
      *
      * @param ContextInterface $context Context for the message.
@@ -178,7 +178,7 @@ class Message implements MessageInterface
 
     /**
      * Creates a report message with the "warn" severity.
-     * 
+     *
      * Summary usage: issues that do not prevent structural validation. For example, unexpected keys.
      *
      * @param ContextInterface $context Context for the message.
@@ -193,7 +193,7 @@ class Message implements MessageInterface
 
     /**
      * Creates a report message with the "error" severity.
-     * 
+     *
      * Summary usage: issues that allow structural validation to continue to some degree. For example, a field being the wrong datatype.
      *
      * @param ContextInterface $context Context for the message.
@@ -208,7 +208,7 @@ class Message implements MessageInterface
 
     /**
      * Creates a report message with the "fatal" severity.
-     * 
+     *
      * Summary usage: issues that prevent further structural validation. For example, syntax errors.
      *
      * @param ContextInterface $context Context for the message.

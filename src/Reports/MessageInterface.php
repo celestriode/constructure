@@ -6,7 +6,7 @@ interface MessageInterface
 {
     /**
      * Sets the format to be filled in with args.
-     * 
+     *
      * See sprintf() for formatting details.
      *
      * @param string $format The format to use.
@@ -24,7 +24,7 @@ interface MessageInterface
 
     /**
      * Sets the context relevant to this report.
-     * 
+     *
      * Context is used in order to provide a stringified
      * version of the problematic structure.
      *
@@ -71,7 +71,7 @@ interface MessageInterface
 
     /**
      * Returns the severity of the message.
-     * 
+     *
      * Null if no severity whatsoever (just a simple message).
      *
      * @return SeverityInterface|null

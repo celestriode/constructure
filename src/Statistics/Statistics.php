@@ -49,7 +49,6 @@ class Statistics
                 // If the stat itself is numeric, return it.
 
                 if (is_numeric($current[$pathToStat[$i]])) {
-
                     return $current[$pathToStat[$i]];
                 }
 

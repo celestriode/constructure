@@ -2,5 +2,4 @@
 
 class Fatal extends AbstractSeverity
 {
-    
 }
