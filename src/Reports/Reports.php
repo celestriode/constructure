@@ -2,7 +2,7 @@
 
 /**
  * A standard report container optionally available for all structure validators to use.
- * 
+ *
  * This class is used if no reports container is supplied to Celestriode\Constructure::validate().
  */
 class Reports implements ReportsInterface

@@ -13,7 +13,7 @@ interface AuditInterface
 {
     /**
      * Performs extra tasks to validate integrity of input.
-     * 
+     *
      * Should throw Celestriode\Exceptions\AuditFailed if the audit could not be performed.
      * It should be thrown with the issue message itself rather than creating a report.
      * Use reports instead for "debug", "info", and "warn" severities. But really it's up

@@ -4,7 +4,7 @@ use Celestriode\Constructure\Utils\MultiSingletonTrait;
 
 /**
  * A standard severity class optionally available for all custom severities to extend.
- * 
+ *
  * Also provides access to ::instance().
  */
 abstract class AbstractSeverity implements SeverityInterface
@@ -13,7 +13,7 @@ abstract class AbstractSeverity implements SeverityInterface
 
     /**
      * Returns percent based on the current class for ease of editing.
-     * 
+     *
      * If overriding, you can use parent::getPercent() as a fallback.
      *
      * @return float

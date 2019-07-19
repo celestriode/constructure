@@ -2,7 +2,7 @@
 
 /**
  * A collection of MessageInterfaces, which are the message containers for reports.
- * 
+ *
  * While ReportsInterface::getReports() could just return an array, having this class
  * available allows for more future options for ease of use.
  */

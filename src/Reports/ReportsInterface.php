@@ -4,7 +4,7 @@ use Celestriode\Constructure\Reports\Severities\SeverityInterface;
 
 /**
  * Describes what all report containers must be able to do.
- * 
+ *
  * Which is really just adding and getting reports.
  */
 interface ReportsInterface

@@ -9,7 +9,7 @@ use Celestriode\Constructure\Reports\Severities\Warn;
 
 /**
  * A standard report message optionally available for all structure validators to use.
- * 
+ *
  * Primarily implements simple methods, but comes with some helper methods to more easily
  * create messages based on standard severities packaged with this library.
  */

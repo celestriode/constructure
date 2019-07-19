@@ -4,7 +4,7 @@ use Celestriode\Constructure\Reports\MessageInterface;
 
 /**
  * Parent class for all exceptions that make use of a report message.
- * 
+ *
  * These exceptions can only be created by using the ::create() method, which requires a report message.
  */
 abstract class AbstractReportException extends AbstractConstructureException
@@ -39,7 +39,6 @@ abstract class AbstractReportException extends AbstractConstructureException
         // If calling create() directly, throw error.
 
         if (static::class == self::class) {
-
             throw new \RuntimeException('Cannot create an abstract class');
         }
 

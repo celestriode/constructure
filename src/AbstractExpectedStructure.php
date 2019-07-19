@@ -8,7 +8,7 @@ use Celestriode\Constructure\Exceptions\AuditFailed;
 
 /**
  * A standard structure optionally available for all structures to extend.
- * 
+ *
  * Handles audits in a generic fashion.
  */
 abstract class AbstractExpectedStructure implements StructureInterface
@@ -70,7 +70,6 @@ abstract class AbstractExpectedStructure implements StructureInterface
                 // And if the test fails, do not perform the audit.
 
                 if (!$predicate->test($input)) {
-
                     continue;
                 }
             }
@@ -78,7 +77,6 @@ abstract class AbstractExpectedStructure implements StructureInterface
             // Otherwise perform the audit.
 
             try {
-
                 $audit->audit($input, $this, $reports, $statistics);
             } catch (AuditFailed $exc) {
 
