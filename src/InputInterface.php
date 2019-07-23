@@ -16,4 +16,11 @@ interface InputInterface
      * @return ContextInterface
      */
     public function getContext(): ContextInterface;
+
+    /**
+     * Returns the direct parent structure of this input. If there is none, returns null.
+     *
+     * @return InputInterface|null
+     */
+    public function getParentInput(): ?InputInterface;
 }
