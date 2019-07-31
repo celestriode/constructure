@@ -49,13 +49,13 @@ class Constructure
             // Add the message to reports.
 
             $reports->addReport($exc->getReportMessage());
-			$successful = false;
+            $successful = false;
         } catch (AbstractConstructureException $exc) {
 
             // Non-reported error.
 
             $reports->addReport(Message::fatal($input->getContext(), 'A fatal error has occurred: ' . $exc->getMessage()));
-			$successful = false;
+            $successful = false;
         }
 
         // Return the results.

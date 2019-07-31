@@ -11,7 +11,7 @@ use Celestriode\Constructure\Exceptions\AbstractReportException;
 abstract class AbstractPredicate implements PredicateInterface
 {
     use MultiSingletonTrait;
-	
+    
     /** @var array $issues The optional issues raised by the predicate. */
     private $issues = [];
 
@@ -19,7 +19,7 @@ abstract class AbstractPredicate implements PredicateInterface
      * Adds an exception to the list of exceptions. These can be optionally
      * accessed later on to either throw the exceptions or to add their
      * messages to reports directly.
-     * 
+     *
      * This allows predicates to be silent but still have something to say.
      *
      * @param AbstractReportException $issue The exception to add.

@@ -83,7 +83,6 @@ abstract class AbstractExpectedStructure implements StructureInterface
 
             try {
                 if (!$audit->audit($input, $this, $reports, $statistics)) {
-
                     $successful = false;
                 }
             } catch (AuditFailed $exc) {
@@ -94,8 +93,8 @@ abstract class AbstractExpectedStructure implements StructureInterface
                 $successful = false;
             }
         }
-		
-		// Return whether or not all audits were successful.
+        
+        // Return whether or not all audits were successful.
 
         return $successful;
     }

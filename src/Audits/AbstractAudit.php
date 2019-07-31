@@ -17,7 +17,7 @@ abstract class AbstractAudit implements AuditInterface
 
     /**
      * Loops through provided issues and adds them to the provided reports.
-     * 
+     *
      * If the input extends AbstractExpectedStructure, it will run
      * addStructureReport() instead.
      *
