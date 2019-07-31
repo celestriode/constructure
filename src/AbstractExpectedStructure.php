@@ -5,6 +5,8 @@ use Celestriode\Constructure\Statistics\Statistics;
 use Celestriode\Constructure\Audits\AuditInterface;
 use Celestriode\Constructure\Predicates\PredicateInterface;
 use Celestriode\Constructure\Exceptions\AuditFailed;
+use Celestriode\Constructure\Reports\ReportCollection;
+use Celestriode\Constructure\Reports\MessageInterface;
 
 /**
  * A standard structure optionally available for all structures to extend.
@@ -15,10 +17,13 @@ abstract class AbstractExpectedStructure implements StructureInterface
 {
     /** @var \SplObjectStorage $audits The audits, stored as audit->predicate key/pair values. */
     private $audits;
+    /** @var ReportCollection $structureReports A collection of reports generated specifically for this structure. */
+    private $structureReports;
 
     public function __construct()
     {
         $this->audits = new \SplObjectStorage();
+        $this->structureReports = new ReportCollection();
     }
 
     /**
@@ -36,6 +41,20 @@ abstract class AbstractExpectedStructure implements StructureInterface
     }
 
     /**
+     * Adds a report message to the structure itself, as well as
+     * to the full reports, killing two birds with one stone.
+     *
+     * @param MessageInterface $message The message to add to the structure.
+     * @param ReportsInterface $reports The reports to add the message to.
+     * @return void
+     */
+    final public function addStructureReport(MessageInterface $message, ReportsInterface $reports): void
+    {
+        $this->getStructureReports()->addReports($message);
+        $reports->addReport($message);
+    }
+
+    /**
      * Returns the audits for this structure.
      *
      * @return \SplObjectStorage
@@ -43,6 +62,16 @@ abstract class AbstractExpectedStructure implements StructureInterface
     final public function getAudits(): \SplObjectStorage
     {
         return $this->audits;
+    }
+
+    /**
+     * Returns reports relevant only to this structure.
+     *
+     * @return ReportCollection
+     */
+    final public function getStructureReports(): ReportCollection
+    {
+        return $this->structureReports;
     }
 
     /**
