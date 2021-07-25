@@ -47,13 +47,6 @@ class TriggerEvent extends AbstractAudit
      */
     public function audit(AbstractConstructure $constructure, StructureInterface $input, StructureInterface $expected): bool
     {
-        // Check if predicates fail first.
-
-        if (!$this->runPredicates($constructure, $input, $expected)) {
-
-            return true;
-        }
-
         // Fire the event.
 
         $constructure->getEventHandler()->trigger($this->getEventName(), $this, $constructure, $input, $expected);

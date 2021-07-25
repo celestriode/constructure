@@ -34,17 +34,6 @@ abstract class AbstractAudit implements AuditInterface
     private $deferred = false;
 
     /**
-     * Returns whether or not the audit has been deferred. Deferred audits are meant to run after other audits do. Use
-     * this in the event an audit needs to run after other audits, if necessary.
-     *
-     * @return bool
-     */
-    public function isDeferred(): bool
-    {
-        return $this->deferred;
-    }
-
-    /**
      * Marks the audit as deferred. This means it will run after all non-deferred audits, which can be useful for
      * auditing failed audits (when using AbstractStructure or having implemented such functionality in your own base).
      *
@@ -59,11 +48,17 @@ abstract class AbstractAudit implements AuditInterface
     }
 
     /**
-     * Adds multiple predicates to the audit.
-     *
-     * @param AuditInterface ...$predicates The optional audits to silently check before firing the event.
+     * @inheritDoc
      */
-    public function addPredicates(AuditInterface ...$predicates): self
+    public function isDeferred(): bool
+    {
+        return $this->deferred;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addPredicates(AuditInterface ...$predicates): AuditInterface
     {
         foreach ($predicates as $predicate) {
 
@@ -74,12 +69,9 @@ abstract class AbstractAudit implements AuditInterface
     }
 
     /**
-     * Adds a single predicate to the audit.
-     *
-     * @param AuditInterface $predicate The predicate to add to the audit.
-     * @return $this
+     * @inheritDoc
      */
-    public function addPredicate(AuditInterface $predicate): self
+    public function addPredicate(AuditInterface $predicate): AuditInterface
     {
         $this->predicates[] = $predicate;
 
@@ -87,9 +79,7 @@ abstract class AbstractAudit implements AuditInterface
     }
 
     /**
-     * Returns the predicates for this audit, if any.
-     *
-     * @return AuditInterface[]
+     * @inheritDoc
      */
     public function getPredicates(): array
     {
@@ -97,16 +87,9 @@ abstract class AbstractAudit implements AuditInterface
     }
 
     /**
-     * Runs all the predicates (silent audits) attached to the audit. Returns whether or not they all pass.
-     *
-     * Use this when you want to check attached predicates.
-     *
-     * @param AbstractConstructure $constructure
-     * @param StructureInterface $input
-     * @param StructureInterface $expected
-     * @return bool
+     * @inheritDoc
      */
-    protected function runPredicates(AbstractConstructure $constructure, StructureInterface $input, StructureInterface $expected): bool
+    public function runPredicates(AbstractConstructure $constructure, StructureInterface $input, StructureInterface $expected): bool
     {
         // If there are no predicates, skip and return true.
 

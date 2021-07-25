@@ -15,6 +15,8 @@ abstract class AbstractStructure implements StructureInterface
      * Set of event names related to running audits.
      */
     public const AUDITS_START = "76028523-a531-467f-968e-26dadd3d0bb0";
+    public const AUDIT_PREDICATES_START = "a850b59c-2fc0-4fd3-8e55-e8fb538b1b7a";
+    public const AUDIT_PREDICATES_COMPLETE = "4698da52-c6cd-4bee-b14f-c21b2e6bbfcf";
     public const AUDIT_RUNNING = "3203764b-dfeb-4831-88e0-7ccc65f3a998";
     public const AUDIT_PASSED = "003e5bbd-4c94-41bd-910d-b04f61cabbef";
     public const AUDIT_FAILED = "d793a446-3081-47e1-8523-e839ff2ea385";
@@ -170,6 +172,21 @@ abstract class AbstractStructure implements StructureInterface
      */
     protected function runAudit(AuditInterface $audit, AbstractConstructure $constructure, StructureInterface $other): bool
     {
+        // Run predicates first, if any.
+
+        $constructure->getEventHandler()->trigger(self::AUDIT_PREDICATES_START, $audit, $other, $this);
+
+        $predicatesPass = $audit->runPredicates($constructure, $other, $this);
+
+        $constructure->getEventHandler()->trigger(self::AUDIT_PREDICATES_COMPLETE, $audit, $other, $this, $predicatesPass);
+
+        // If predicates did not pass, pretend the audit did not even exist (which means it passes).
+
+        if (!$predicatesPass) {
+
+            return true;
+        }
+
         // If the audit failed, mark success as false. Continue doing audits though; no need to hide other issues.
 
         $constructure->getEventHandler()->trigger(self::AUDIT_RUNNING, $audit, $other, $this);
