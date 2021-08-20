@@ -36,6 +36,36 @@ class EventHandler implements EventHandlerInterface
      */
     private $captured = [];
 
+    public function __construct(bool $defaultEvents = true)
+    {
+        // If default events should be added, do so.
+
+        if ($defaultEvents) {
+
+            $this->addEvent(self::CAPTURED_RELEASED, self::getCapturedReleasedEvent());
+        }
+    }
+
+    /**
+     * Returns the event function that handles triggering captured events that have been released.
+     *
+     * @return callable
+     */
+    public static function getCapturedReleasedEvent(): callable
+    {
+        return function(EventHandlerInterface $eventHandler, CapturedEvent ...$capturedEvents) {
+
+            // Cycle through all captured events.
+
+            foreach ($capturedEvents as $capturedEvent) {
+
+                // Run the captured event through the supplied event handler.
+
+                $eventHandler->runEvent($capturedEvent->getFunction(), ...$capturedEvent->getInputs());
+            }
+        };
+    }
+
     /**
      * Adds an event to be triggered later. Can have multiple events with the same name.
      *
@@ -64,10 +94,10 @@ class EventHandler implements EventHandlerInterface
      * Triggers all events stored under the specified name.
      *
      * @param string $name The name of the event to fire.
-     * @param mixed ...$input Any input to pass to the events being fired.
+     * @param mixed ...$inputs Any input to pass to the events being fired.
      * @return EventHandlerInterface
      */
-    public function trigger(string $name, ...$input): EventHandlerInterface
+    public function trigger(string $name, ...$inputs): EventHandlerInterface
     {
         // If events aren't muted and events with the given name exists...
 
@@ -81,20 +111,31 @@ class EventHandler implements EventHandlerInterface
 
                 if ($this->capturing()) {
 
-                    $this->addCapturedEvent($name, $event, $input);
+                    $this->addCapturedEvent(new CapturedEvent($name, $event, $inputs));
 
-                    $this->trigger(self::CAPTURED, $name, $event, $input, $this);
+                    $this->trigger(self::CAPTURED, $name, $event, $inputs, $this);
 
                 } else {
 
                     // Otherwise, run the event.
 
-                    call_user_func($event, ...$input);
+                    $this->runEvent($event, ...$inputs);
                 }
             }
         }
 
         return $this;
+    }
+
+    /**
+     * Runs an event function with the provided inputs.
+     *
+     * @param callable $event The event to run.
+     * @param mixed ...$inputs The inputs to supply to the event.
+     */
+    public function runEvent(callable $event, ...$inputs): void
+    {
+        call_user_func($event, ...$inputs);
     }
 
     /**
@@ -165,7 +206,7 @@ class EventHandler implements EventHandlerInterface
         // Clear captured events and run a trigger that indicates they've been released.
 
         $this->capturing = false;
-        $this->trigger(self::CAPTURED_RELEASED, $this->getCapturedEvents(), $this);
+        $this->trigger(self::CAPTURED_RELEASED, $this, ...$this->getCapturedEvents());
         $this->captured = [];
 
         return $this;
@@ -179,7 +220,7 @@ class EventHandler implements EventHandlerInterface
     public function clear(): EventHandlerInterface
     {
         $this->capturing = false;
-        $this->trigger(self::CAPTURED_CLEARED, $this->getCapturedEvents(), $this);
+        $this->trigger(self::CAPTURED_CLEARED, $this, ...$this->getCapturedEvents());
         $this->captured = [];
 
         return $this;
@@ -188,14 +229,12 @@ class EventHandler implements EventHandlerInterface
     /**
      * Captures an event.
      *
-     * @param string $name The name of the event that was captured.
-     * @param callable $event The event that was captured.
-     * @param mixed ...$input The input that was to be passed to the event that was captured.
+     * @param CapturedEvent $capturedEvent The captured event.
      * @return EventHandlerInterface
      */
-    public function addCapturedEvent(string $name, callable $event, ...$input): EventHandlerInterface
+    public function addCapturedEvent(CapturedEvent $capturedEvent): EventHandlerInterface
     {
-        $this->captured[] = [$name, $event, $input];
+        $this->captured[] = $capturedEvent;
 
         return $this;
     }
@@ -203,7 +242,7 @@ class EventHandler implements EventHandlerInterface
     /**
      * Returns all captured events.
      *
-     * @return array
+     * @return CapturedEvent[]
      */
     public function getCapturedEvents(): array
     {

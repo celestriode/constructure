@@ -1,7 +1,6 @@
 <?php namespace Celestriode\Constructure\Context;
 
 use Celestriode\Constructure\AbstractConstructure;
-use Celestriode\Constructure\Context\Audits\AbstractAudit;
 use Celestriode\Constructure\Structures\StructureInterface;
 
 /**

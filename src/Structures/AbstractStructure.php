@@ -36,11 +36,13 @@ abstract class AbstractStructure implements StructureInterface
 
     /**
      * @var AuditInterface[] The audits that failed, if any. Should only be populated on the input.
+     * Do not add failed audits to the expected structure.
      */
     private $failedAudits = [];
 
     /**
      * @var null|bool True if the input structure passed all audits. False if not. Null if auditing has yet to occur.
+     * Do not set this value on the expected structure.
      */
     private $passed;
 
@@ -50,7 +52,8 @@ abstract class AbstractStructure implements StructureInterface
     }
 
     /**
-     * Sets whether or not the structure has passed audits. The expected structure should be setting this value.
+     * Sets whether or not the structure has passed audits. The expected structure should be setting this value on the
+     * input. Do not set this on the expected structure.
      *
      * @param bool $passed True if the structure passes.
      * @return $this

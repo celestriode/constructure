@@ -28,10 +28,18 @@ interface EventHandlerInterface
      * Triggers all events stored under the specified name.
      *
      * @param string $name The name of the event to fire.
-     * @param mixed ...$input Any input to pass to the events being fired.
+     * @param mixed ...$inputs Any input to pass to the events being fired.
      * @return self
      */
-    public function trigger(string $name, ...$input): self;
+    public function trigger(string $name, ...$inputs): self;
+
+    /**
+     * Runs an event function with the provided inputs.
+     *
+     * @param callable $event The event to run.
+     * @param mixed ...$inputs The inputs to supply to the event.
+     */
+    public function runEvent(callable $event, ...$inputs): void;
 
     /**
      * Mute the event handler, preventing the triggering of events. Use this to ignore
@@ -87,17 +95,15 @@ interface EventHandlerInterface
     /**
      * Captures an event.
      *
-     * @param string $name The name of the event that was captured.
-     * @param callable $event The event that was captured.
-     * @param mixed ...$input The input that was to be passed to the event that was captured.
+     * @param CapturedEvent $capturedEvent The captured event.
      * @return self
      */
-    public function addCapturedEvent(string $name, callable $event, ...$input): self;
+    public function addCapturedEvent(CapturedEvent $capturedEvent): self;
 
     /**
      * Returns all captured events.
      *
-     * @return array
+     * @return CapturedEvent[]
      */
     public function getCapturedEvents(): array;
 }
