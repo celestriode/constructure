@@ -74,4 +74,11 @@ interface AuditInterface
      */
     public static function getName(): string;
 
+    /**
+     * Transforms the audit into a string representation. For example, if you wanted the stringified audit to include
+     * any options passed in, you could return a string such as: audit_name{option1=a,option2=[1,2,3]}
+     *
+     * @return string
+     */
+    public function toString(): string;
 }

@@ -124,6 +124,16 @@ abstract class AbstractAudit implements AuditInterface
     }
 
     /**
+     * Returns the name of the audit. Any other implementation is up to extending libraries.
+     *
+     * @return string
+     */
+    public function toString(): string
+    {
+        return static::getName();
+    }
+
+    /**
      * Creates a singleton of the audit. Useful for audits that do not take any arguments and therefore do not need more
      * than one instance to exist.
      *
