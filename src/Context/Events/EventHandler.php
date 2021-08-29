@@ -109,7 +109,7 @@ class EventHandler implements EventHandlerInterface
 
                 // If capturing is enabled, store the event for later.
 
-                if ($this->capturing()) {
+                if ($this->capturing() && $name != self::CAPTURED) {
 
                     $this->addCapturedEvent(new CapturedEvent($name, $event, $inputs));
 
