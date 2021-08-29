@@ -28,16 +28,6 @@ class IsNumber extends AbstractAudit
     }
 
     /**
-     * Return the name of the audit, which in this case is pretty self-explanatory.
-     *
-     * @return string
-     */
-    public static function getName(): string
-    {
-        return "is_number";
-    }
-
-    /**
      * Takes in the input structure and the expected structure. The input structure
      * contains the data to audit, while the expected structure contains any context necessary for what
      * is expected for the input. The Constructure does event handling.
@@ -80,5 +70,26 @@ class IsNumber extends AbstractAudit
         $constructure->getEventHandler()->trigger("log_message", "Input ({$input->toString()}) is not a number.");
 
         return false;
+    }
+
+    /**
+     * Return the name of the audit, which in this case is pretty self-explanatory.
+     *
+     * @return string
+     */
+    public static function getName(): string
+    {
+        return "is_number";
+    }
+
+    /**
+     * The audit comes with an option called "strict", so transforming the audit into a string should take that into
+     * consideration.
+     *
+     * @return string
+     */
+    public function toString(): string
+    {
+        return self::getName() . '{strict=' . ($this->strict ? 'true' : 'false') . '}';
     }
 }

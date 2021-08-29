@@ -74,4 +74,12 @@ class TriggerEvent extends AbstractAudit
     {
         return "trigger_event";
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function toString(): string
+    {
+        return self::getName() . '{event=' . $this->getEventName() . '}';
+    }
 }

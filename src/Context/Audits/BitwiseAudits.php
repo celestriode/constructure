@@ -258,4 +258,38 @@ class BitwiseAudits extends AbstractAudit
     {
         return 'bitwise_audits';
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function toString(): string
+    {
+        // Get audit strings.
+
+        $auditStrings = array_map(function (AuditInterface $audit) {
+
+            return $audit->toString();
+        }, $this->getAudits());
+
+        // Switch operator string.
+
+        switch ($this->getOperator()) {
+
+            case self::OR:
+                $operator = 'OR';
+                break;
+            case self::XOR:
+                $operator = 'XOR';
+                break;
+            case self::NOT:
+                $operator = 'NOT';
+                break;
+            default:
+                $operator = 'UNKNOWN';
+        }
+
+        // Build and return the bitwise audits string.
+
+        return self::getName() . '{operator=' . $operator . ',audits=[' . implode(', ', $auditStrings) . ']}';
+    }
 }
