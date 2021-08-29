@@ -17,10 +17,12 @@ class BitwiseAudits extends AbstractAudit
     public const XOR_MULTIPLE_PASS = 'ec0eeaae-abe9-4c58-8a2a-6827fb55580b';
     public const XOR_FAILED = '94ccbcd2-49c1-4fd6-8f34-79d66212acd7';
     public const NOT_FAILED = '19427129-09d1-4626-a468-96045992cc1b';
+    public const AND_FAILED = 'c5131935-30b4-4546-b028-9582f77cb570';
 
     public const OR = 1;
     public const XOR = 2;
     public const NOT = 3;
+    public const AND = 4;
 
     /**
      * @var int The operator to use for this audit.
@@ -56,6 +58,8 @@ class BitwiseAudits extends AbstractAudit
                 return $this->bitwiseXor($constructure, $input, $expected);
             case self::NOT:
                 return $this->bitwiseNot($constructure, $input, $expected);
+            case self::AND:
+                return $this->bitwiseAnd($constructure, $input, $expected);
             default:
                 throw new class('Invalid operator: ' . $this->getOperator()) extends AbstractConstructureException {};
         }
@@ -232,6 +236,43 @@ class BitwiseAudits extends AbstractAudit
     }
 
     /**
+     * Determines if the input passes all of the supplied audits. That is, all supplied audits must pass.
+     *
+     * @param AbstractConstructure $constructure The base Constructure object, which holds the event handler.
+     * @param StructureInterface $input The input to be compared with the expected structure.
+     * @param StructureInterface $expected The expected structure that the input should adhere to.
+     * @return bool
+     */
+    protected function bitwiseAnd(AbstractConstructure $constructure, StructureInterface $input, StructureInterface $expected): bool
+    {
+        // Cycle through all audits.
+
+        foreach ($this->getAudits() as $audit) {
+
+            // Capture events.
+
+            $constructure->getEventHandler()->capture();
+
+            // If an audit does not pass, this audit fails.
+
+            if (!$audit->audit($constructure, $input, $expected)) {
+
+                $capturedEvents = $constructure->getEventHandler()->getCapturedEvents();
+                $constructure->getEventHandler()->clear();
+                $constructure->getEventHandler()->trigger(self::AND_FAILED, $audit, $capturedEvents, $this, $input, $expected);
+            }
+
+            // Clear captured events.
+
+            $constructure->getEventHandler()->clear();
+        }
+
+        // All audits passed, return true.
+
+        return true;
+    }
+
+    /**
      * Returns the operator used with this audit.
      *
      * @return int
@@ -283,6 +324,9 @@ class BitwiseAudits extends AbstractAudit
                 break;
             case self::NOT:
                 $operator = 'NOT';
+                break;
+            case self::AND:
+                $operator = 'AND';
                 break;
             default:
                 $operator = 'UNKNOWN';
