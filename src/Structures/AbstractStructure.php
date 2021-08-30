@@ -90,9 +90,15 @@ abstract class AbstractStructure implements StructureInterface
      */
     public function compare(AbstractConstructure $constructure, StructureInterface $other): bool
     {
-        // Prepare the audits. Include global audits.
+        // Prepare the audits. Include global audits if required.
 
-        $audits = array_merge($this->getAudits(), $constructure->getGlobalAudits());
+        if ($this->useGlobalAudits()) {
+
+            $audits = array_merge($this->getAudits(), $constructure->getGlobalAudits());
+        } else {
+
+            $audits = $this->getAudits();
+        }
 
         // Cycle through all the audits.
 
@@ -133,6 +139,16 @@ abstract class AbstractStructure implements StructureInterface
         // Return whether or not all audits passed.
 
         return $other->passed();
+    }
+
+    /**
+     * Returns whether or not global audits should be used when performing audits.
+     *
+     * @return bool
+     */
+    protected function useGlobalAudits(): bool
+    {
+        return true;
     }
 
     /**
