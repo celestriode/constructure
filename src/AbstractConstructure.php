@@ -2,6 +2,7 @@
 
 use Celestriode\Constructure\Context\AuditInterface;
 use Celestriode\Constructure\Context\Events\EventHandlerInterface;
+use Celestriode\Constructure\Exceptions\ConversionFailureException;
 use Celestriode\Constructure\Structures\StructureInterface;
 
 /**
@@ -56,6 +57,7 @@ abstract class AbstractConstructure
      *
      * @param mixed $input
      * @return StructureInterface
+     * @throws ConversionFailureException
      */
     abstract public function toStructure($input): StructureInterface;
 
